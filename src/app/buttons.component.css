@@ -4,15 +4,6 @@
     border: 1px dashed black;
 } */ 
 
-.calculator {
-    width: 300px;
-    height: 410px;
-    background-color: silver;
-    padding: 1rem; 
-    border-radius: 0.5rem;
-    margin-top: 3rem;
-}
-
 button {
     font-weight: bold;
     width: 2rem;
