@@ -1,13 +1,14 @@
 /* Utilising BEM for naming*/
 
-/* {
+* {
     border: 1px dashed black;
-} */ 
+} 
 
 
 
 .calculatorScreen {
-    background-color: lightslategray;
+    background-color: #707070;
+    color: black;
     border-radius: 0.5rem;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
@@ -20,5 +21,6 @@
 }
 
 .calculatorScreen__lower {
+    font-family: Orbitron, sans-serif;
     font-size: 16px;
 }
