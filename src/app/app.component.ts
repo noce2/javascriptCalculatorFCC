@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { OrchestratorService } from './orchestrator.service'
+import { OrchestratorService } from './services/orchestrator.service'
 
 @Component({
-  selector: 'my-app',
+  selector: 'calc-app',
   templateUrl: `./app.component.html`,
   styleUrls: ['./app.component.css'],
 })

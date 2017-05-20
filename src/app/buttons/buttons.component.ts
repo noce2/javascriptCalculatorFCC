@@ -1,8 +1,8 @@
 import { Component, ComponentFactoryResolver, OnInit, ViewChild } from '@angular/core';
 
-import { CalcButtonComponent } from './calcButton.component';
+import { CalcButtonComponent } from './calc-button.component';
 
-import { TopButtonRowDirective } from './topbuttonrow.directive'
+import { TopButtonRowDirective } from './directives/topbuttonrow.directive'
 
 
 @Component({

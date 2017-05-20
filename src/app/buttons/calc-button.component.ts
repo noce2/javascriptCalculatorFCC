@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { OrchestratorService } from './orchestrator.service';
+import { OrchestratorService } from '../services/orchestrator.service';
 
 @Component({
-  selector: 'calcButton',
-  templateUrl: `./calcButton.component.html`,
+  selector: 'calc-button',
+  templateUrl: `./calc-button.component.html`,
   styleUrls: ['./buttons.component.css']
 })
 
