@@ -1,9 +1,0 @@
-Defined an orchestrator service & button class
-
-The orchestrator service will handle bundling the 3 services i need to create
-and will make them available at the root component "App". The calcButton class
-is a repeatable definition of what each button must do.
-
-Currently trying to avoid writing up 18 different components for each button. 
-The approach is instaniate multiple CalcButtonComponents with button values
-specified in the ButtonComponent that calls it.

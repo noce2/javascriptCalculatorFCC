@@ -1,17 +1,16 @@
-import { Component } from '@angular/core';
-import { CalcButton } from './calcButton.class';
+import { Component, Input } from '@angular/core';
 import { OrchestratorService } from './orchestrator.service';
 
 @Component({
-  selector: 'calcButton0',
+  selector: 'calcButton',
   templateUrl: `./calcButton.component.html`,
   styleUrls: ['./buttons.component.css']
 })
 
 export class CalcButtonComponent {
-  calcButton = new CalcButton('0');
+  public value: string = "";
   constructor(private orchestratorservice: OrchestratorService){ }
   press() {
-        this.orchestratorservice.getValue(this.calcButton.value);
+        this.orchestratorservice.getValue(this.value);
     }
 }
