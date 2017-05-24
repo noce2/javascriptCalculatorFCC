@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { OrchestratorService } from './services/orchestrator.service'
+import { OrchestratorService } from './services/orchestrator.service';
 
 @Component({
   selector: 'calc-app',
@@ -7,6 +7,7 @@ import { OrchestratorService } from './services/orchestrator.service'
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent  { 
-  constructor(private orchestratorService: OrchestratorService){ }
 
+  constructor(private orchestratorService: OrchestratorService){ }
+  
  }
