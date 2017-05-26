@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { ScreenService } from './screen.service';
 import { MathEngineService } from './mathEngine.service';
 
-import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 
@@ -15,21 +14,31 @@ export class OrchestratorService {
     
     private currentWorkingValue: string;
     
-    _currentWorkingValue = new Subject<string> ();
+    
 
     
-    constructor(private _screenService: ScreenService){}
+    constructor(public _screenService: ScreenService,
+                private _mathEngineService: MathEngineService){ }
+    // _screenService is public so that it can be accessed via the orchestrator
+    // during subscription in other components
 
-    getValue(input: string){
-        // decides what to do based on a set of stored descriptions
-        this.currentWorkingValue = input;
-        //this.pushToScreen(input);
-        console.log(this.currentWorkingValue);
-        this._currentWorkingValue.next(input);
+
+    calculate(input: string){
+        return this._mathEngineService.evaluate(input);
+        
     }
 
-    pushToScreen(input: string){
-        //this._screenService.pushToScreen(input);
+    private pushToScreen(input: string){
+        this._screenService._currentWorkingValue.next(input);
     }
     
+    whatDoIDo(input: string) {
+        switch (input) {
+            case "=":
+            case "AC":
+            case "CE":
+            default:
+                this.pushToScreen(input);
+        }
+    }
 }

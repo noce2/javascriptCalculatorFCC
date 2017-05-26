@@ -1,16 +1,22 @@
 import { Injectable } from '@angular/core';
+import { ScreenService } from './screen.service';
+import * as _math from 'mathjs';
+
 
 
 @Injectable()
 
 export class MathEngineService {
+    constructor( private _screenService: ScreenService) { }
     evaluate(input: string){
-        console.log(math.abs(-1));
-        //mathjs is exported as a globally available namespace
-        return (math.eval(input)).toString();
+        let toReturn: string;
+        try {
+            toReturn = (_math.eval(input)).toString();
+        } catch (error) {
+            toReturn = "Syntax Error";
+        }
+        return toReturn;
         
-        /*let answer: any = mathjs.eval(input)
-        let answerString: string = answer.toString();
-        return answerString;*/
+        
     }
 }

@@ -11,19 +11,37 @@ export class ScreenComponent  {
   private lowerScreenValue: string = '0';
 
   constructor (private orchestratorService: OrchestratorService) { 
-    this.orchestratorService._currentWorkingValue.subscribe(
+    this.orchestratorService._screenService._currentWorkingValue.subscribe( 
       (input: string) => {
-        this.setLowerScreen(input);
-        this.setUpperScreen(input);
+        switch(input){
+          case '=':
+            let result:string = this.orchestratorService.calculate(this.lowerScreenValue);
+            this.setLowerScreen(`=${result}`);
+            this.setUpperScreen(result);
+          break;
+          case 'AC':
+            this.ac();
+          break;
+          case 'CE':
+          break;
+          default:
+            this.setLowerScreen(input);
+            this.setUpperScreen(input);
+        }
       }
     );
   }
 
-  setLowerScreen(input: string){
+  private setLowerScreen(input: string){
     this.lowerScreenValue = this.lowerScreenValue.concat(input);
   }
 
-  setUpperScreen(input: string){
+  private setUpperScreen(input: string){
     this.upperScreenValue = input;
+  }
+
+  private ac(){
+    this.lowerScreenValue = '0';
+    this.setUpperScreen('0');
   }
  }

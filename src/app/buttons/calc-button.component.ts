@@ -12,6 +12,6 @@ export class CalcButtonComponent {
   value: string;
   constructor(private orchestratorservice: OrchestratorService){ }
   press() {
-        this.orchestratorservice.getValue(this.value);
+        this.orchestratorservice.whatDoIDo(this.value);
     }
 }
