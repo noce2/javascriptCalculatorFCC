@@ -8,7 +8,7 @@ import { OrchestratorService } from "../services/orchestrator.service";
 })
 export class ScreenComponent  { 
   private upperScreenValue: string = '0';
-  private lowerScreenValue: string = '0';
+  private lowerScreenValue: string = '';
 
   constructor (private orchestratorService: OrchestratorService) { 
     this.orchestratorService._screenService._currentWorkingValue.subscribe( 
@@ -41,7 +41,7 @@ export class ScreenComponent  {
   }
 
   private ac(){
-    this.lowerScreenValue = '0';
+    this.lowerScreenValue = '';
     this.setUpperScreen('0');
   }
  }

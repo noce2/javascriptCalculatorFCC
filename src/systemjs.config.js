@@ -43,7 +43,6 @@
       },
       'mathjs': {
         main: 'index',
-        defaultExtension: 'js',
         map: {
           'decimal.js': '../decimal.js/decimal.min.js',
           'complex.js': '../complex.js/complex.min.js',
