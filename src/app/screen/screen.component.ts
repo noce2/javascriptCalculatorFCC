@@ -61,7 +61,7 @@ export class ScreenComponent  {
   
   private clearLastDigitOrOp(input: string){
     if(input){
-      let searchParam = /(?:\d*\.)?\d+$|[*/+-]$/g;
+      let searchParam = /(?:\d*\.)?\d+(?:e[+-]\d+)?$|[*/+-]$/g;
       return (input.split(searchParam))[0];
     } else {
       return "";
