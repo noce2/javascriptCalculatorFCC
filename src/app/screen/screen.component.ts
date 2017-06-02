@@ -16,13 +16,18 @@ export class ScreenComponent  {
         switch(input){
           case '=':
             let result:string = this.orchestratorService.calculate(this.lowerScreenValue);
-            this.setLowerScreen(`=${result}`);
+            this.resetLowerScreen();
+            this.setLowerScreen(`${result}`);
             this.setUpperScreen(result);
           break;
           case 'AC':
             this.ac();
           break;
           case 'CE':
+            let lastInLower = this.lowerScreenValue;
+            this.resetLowerScreen();
+            this.resetUpperScreen();
+            this.setLowerScreen(this.clearLastDigitOrOp(lastInLower));
           break;
           default:
             this.setLowerScreen(input);
@@ -40,8 +45,28 @@ export class ScreenComponent  {
     this.upperScreenValue = input;
   }
 
-  private ac(){
+  private resetLowerScreen(){
     this.lowerScreenValue = '';
+  }
+
+  private resetUpperScreen(){
     this.setUpperScreen('0');
+  }
+
+  private ac(){
+    this.resetLowerScreen();
+    this.resetUpperScreen();
+  }
+
+  
+  private clearLastDigitOrOp(input: string){
+    if(input){
+      let searchParam = /(?:\d*\.)?\d+$|[*/+-]$/g;
+      return (input.split(searchParam))[0];
+    } else {
+      return "";
+    }
+    
+
   }
  }
