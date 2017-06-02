@@ -12,28 +12,7 @@ export class ScreenComponent  {
 
   constructor (private orchestratorService: OrchestratorService) { 
     this.orchestratorService._screenService._currentWorkingValue.subscribe( 
-      (input: string) => {
-        switch(input){
-          case '=':
-            let result:string = this.orchestratorService.calculate(this.lowerScreenValue);
-            this.resetLowerScreen();
-            this.setLowerScreen(`${result}`);
-            this.setUpperScreen(result);
-          break;
-          case 'AC':
-            this.ac();
-          break;
-          case 'CE':
-            let lastInLower = this.lowerScreenValue;
-            this.resetLowerScreen();
-            this.resetUpperScreen();
-            this.setLowerScreen(this.clearLastDigitOrOp(lastInLower));
-          break;
-          default:
-            this.setLowerScreen(input);
-            this.setUpperScreen(input);
-        }
-      }
+      this.subscribeCallBacks
     );
   }
 
@@ -69,4 +48,27 @@ export class ScreenComponent  {
     
 
   }
+
+  private subscribeCallBacks = (input: string) => {
+        switch(input){
+          case '=':
+            let result:string = this.orchestratorService.calculate(this.lowerScreenValue);
+            this.resetLowerScreen();
+            this.setLowerScreen(`${result}`);
+            this.setUpperScreen(result);
+          break;
+          case 'AC':
+            this.ac();
+          break;
+          case 'CE':
+            let lastInLower = this.lowerScreenValue;
+            this.resetLowerScreen();
+            this.resetUpperScreen();
+            this.setLowerScreen(this.clearLastDigitOrOp(lastInLower));
+          break;
+          default:
+            this.setLowerScreen(input);
+            this.setUpperScreen(input);
+        }
+      }
  }
