@@ -12,11 +12,6 @@ export class OrchestratorService {
         button input it receives.
     */
     
-    private currentWorkingValue: string;
-    
-    
-
-    
     constructor(public _screenService: ScreenService,
                 private _mathEngineService: MathEngineService){ }
     // _screenService is public so that it can be accessed via the orchestrator
