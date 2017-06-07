@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ScreenService } from './screen.service';
 import * as _math from 'mathjs';
 
 
@@ -16,8 +15,6 @@ export class MathEngineService {
             upper: 1e5
         }
     };
-
-    constructor( private _screenService: ScreenService) { }
 
     evaluate(input: string){
         let toReturn: string;
