@@ -1,5 +1,7 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+//when you wish to start the lite-server version, recompile the main-jit version
+import { platformBrowser } from '@angular/platform-browser';
 
-import { AppModule } from './app/app.module';
+import { AppModuleNgFactory } from '../dist/src/app/app.module.ngfactory';
 
-platformBrowserDynamic().bootstrapModule(AppModule);
+console.log('Running AOT compiled');
+platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
