@@ -9,6 +9,7 @@ import { OrchestratorService } from "../services/orchestrator.service";
 export class ScreenComponent  { 
   private upperScreenValue: string = '0';
   private lowerScreenValue: string = '';
+  private searchParam = /(?:\d*\.)?\d+(?:e[+-]\d+)?$|[*/+-]$/g;
 
   constructor (private orchestratorService: OrchestratorService) { 
     this.orchestratorService._screenService._currentWorkingValue.subscribe( 
@@ -22,6 +23,13 @@ export class ScreenComponent  {
 
   private setUpperScreen(input: string){
     this.upperScreenValue = input;
+  }
+
+  private setUpperScreenToLastDigitOrOperator(){
+    let result = this.lowerScreenValue.match(this.searchParam);
+    if(result){
+      this.setUpperScreen(result[result.length-1]);
+    }
   }
 
   private resetLowerScreen(){
@@ -40,8 +48,8 @@ export class ScreenComponent  {
   
   private clearLastDigitOrOp(input: string){
     if(input){
-      let searchParam = /(?:\d*\.)?\d+(?:e[+-]\d+)?$|[*/+-]$/g;
-      return (input.split(searchParam))[0];
+      
+      return (input.split(this.searchParam))[0];
     } else {
       return "";
     }
@@ -68,7 +76,7 @@ export class ScreenComponent  {
           break;
           default:
             this.setLowerScreen(input);
-            this.setUpperScreen(input);
+            this.setUpperScreenToLastDigitOrOperator();
         }
       }
  }
