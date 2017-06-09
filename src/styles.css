@@ -1,2 +1,3 @@
 /*contains externally imported fonts*/
 @import url('https://fonts.googleapis.com/css?family=Open+Sans|Orbitron');
+@import url('../node_modules/bootstrap/dist/bootstrap.min.css');
