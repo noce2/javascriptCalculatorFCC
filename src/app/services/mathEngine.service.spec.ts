@@ -25,6 +25,11 @@ describe('MathEngineService Tests',() => {
         it('evaluate("0.03/2")',() => {
             expect(_service.evaluate('0.03/2')).toEqual('1.5e-2');
         });
+        
+        it('evaluate("")',() => {
+            expect(_service.evaluate('')).toEqual('');
+        });
+        
     });
 
     describe('I can keep chaining mathematical operations together until \

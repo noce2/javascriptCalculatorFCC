@@ -19,15 +19,20 @@ export class MathEngineService {
     evaluate(input: string){
         let toReturn: string;
         let mathAns: number;
-        try {
-            mathAns = _math.eval(input);
-            
-            toReturn = this.truncateDigits(mathAns,this.digitParams);
+        if(input === ""){
+            return "";
+        } else {
+            try {
+                mathAns = _math.eval(input);
+                
+                toReturn = this.truncateDigits(mathAns,this.digitParams);
 
-        } catch (error) {
-            toReturn = "Syntax Error";
+            } catch (error) {
+                toReturn = "Syntax Error";
+            }
+            return toReturn;
         }
-        return toReturn;
+        
         
         
     }
