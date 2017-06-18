@@ -7,16 +7,19 @@ import { OrchestratorService } from "../services/orchestrator.service";
   styleUrls: ['./screen.component.css'],
 })
 export class ScreenComponent  { 
-  private upperScreenValue: string = '0';
-  private lowerScreenValue: string = '';
+  private upperScreenValue: string;
+  private lowerScreenValue: string;
   private searchParam = /(?:\d*\.)?\d+(?:e[+-]\d+)?$|[*/+-]$/g;
 
-  constructor (private orchestratorService: OrchestratorService) { 
-    this.orchestratorService._screenService._currentWorkingValue.subscribe( 
-      this.subscribeCallBacks
+  constructor (private _orchestratorService: OrchestratorService) { 
+    this._orchestratorService.subscribeToPressedButtonValues( 
+      this,this.subscribeCallBacks
     );
-  }
+    this.upperScreenValue = '0';
+    this.lowerScreenValue = '';
 
+  }
+  
   private setLowerScreen(input: string){
     this.lowerScreenValue = this.lowerScreenValue.concat(input);
   }
@@ -57,10 +60,10 @@ export class ScreenComponent  {
 
   }
 
-  private subscribeCallBacks = (input: string) => {
+  private subscribeCallBacks(input: string) {
         switch(input){
           case '=':
-            let result:string = this.orchestratorService.calculate(this.lowerScreenValue);
+            let result:string = this._orchestratorService.calculate(this.lowerScreenValue);
             this.resetLowerScreen();
             this.setLowerScreen(`${result}`);
             this.setUpperScreen(result);
