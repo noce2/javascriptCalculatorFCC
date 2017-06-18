@@ -34,7 +34,7 @@ So that I can see the calculations I make. ', () => {
                 
             );
         }
-        
+        //for the tests, i have no issue with not encapsulating this.
         _currentvalue = new Subject<string> ();
     }
 
