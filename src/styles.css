@@ -1,3 +1,10 @@
-/*contains externally imported fonts*/
+/* Imports app wide css */
+
+/* Initial Loading Spinner */
+@import url('./assets/spinningWheel.css');
+
+/* contains externally imported fonts */
 @import url('https://fonts.googleapis.com/css?family=Open+Sans|Orbitron');
+
+/* Bootstrap */
 @import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css');
