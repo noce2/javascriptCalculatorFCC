@@ -12,7 +12,7 @@ export class OrchestratorService {
         button input it receives.
     */
     
-    constructor(public _screenService: ScreenService,
+    constructor(private _screenService: ScreenService,
                 private _mathEngineService: MathEngineService){ }
     // _screenService is public so that it can be accessed via the orchestrator
     // during subscription in other components
@@ -23,8 +23,12 @@ export class OrchestratorService {
         
     }
 
+    subscribeToPressedButtonValues(_thisObj: object, callback: (input: string) => void){
+        this._screenService.subscribeToScreenService(_thisObj,callback);
+    }
+
     private pushToScreen(input: string){
-        this._screenService._currentWorkingValue.next(input);
+        this._screenService.updateCurrentWorkingValue(input);
     }
     
     whatDoIDo(input: string) {

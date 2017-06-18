@@ -9,7 +9,7 @@ import { OrchestratorService } from '../services/orchestrator.service';
 
 describe('As a User \
 I want ScreenComponent \
-So that I can see the calculations I make', () => {
+So that I can see the calculations I make. ', () => {
     let comp: ScreenComponent;
     let fixture: ComponentFixture<ScreenComponent>;
     let uprScrnDe: DebugElement;
@@ -17,21 +17,25 @@ So that I can see the calculations I make', () => {
     let lwrScrnDe: DebugElement;
     let lwrScrn: HTMLElement;
     let _orchestratorService: OrchestratorService;
-    let _componentOrchestratorService: OrchestratorService;
+    let _componentOrchestratorService: orchestratorServiceStub;
     
     
     class orchestratorServiceStub{
-        calculate = function(input: string){
-            return "calculate has been called";
-        }
+        
+        calculate = jasmine.createSpy('calculate').and.callFake(
+            function(input: string){
+                return 'calculate was called';
+            });
 
-        pushToScreen(input: string){
-            this._screenService._currentWorkingValue.next();
+        subscribeToPressedButtonValues(_thisObj: object, callback: (input: string) => void){
+            this._currentvalue.subscribe(function(_next: string){
+                callback.call(_thisObj,_next);
+            }
+                
+            );
         }
-
-        _screenService = {
-            _currentWorkingValue: new Subject<String>()
-        }
+        
+        _currentvalue = new Subject<string> ();
     }
 
     beforeEach(()=> {
@@ -39,7 +43,17 @@ So that I can see the calculations I make', () => {
 
         TestBed.configureTestingModule({
             declarations: [ScreenComponent],
-            providers: [{provide: OrchestratorService, useClass: orchestratorServiceStub}]
+            providers: [
+                { provide: OrchestratorService , useValue: {}}
+            ]
+        })
+        // over the components provider, hence empty value above
+        .overrideComponent(ScreenComponent,{
+            set: {
+                providers: [
+                    {provide: OrchestratorService, useClass: orchestratorServiceStub}
+                ]
+            }
         });
 
         fixture = TestBed.createComponent(ScreenComponent);
@@ -48,7 +62,7 @@ So that I can see the calculations I make', () => {
 
         // geting the component version of the service 
         // and the root module's for comparison later
-        _componentOrchestratorService = fixture.debugElement.injector.get(OrchestratorService);
+        _componentOrchestratorService = fixture.debugElement.injector.get(OrchestratorService) as any;
         _orchestratorService = TestBed.get(OrchestratorService);
 
 
@@ -67,7 +81,7 @@ So that I can see the calculations I make', () => {
         // any reqd initial set up. use beforeEach
 
         it('when no number or operator has been pressed \
-        it should have 0 in upperscreen and an empty string in lowerscreen', () => {
+        it should have 0 in upperscreen and an empty string in lowerscreen. ', () => {
                     fixture.detectChanges();
                     expect(lwrScrn.textContent).toBe('');
                     expect(uprScrn.textContent).toBe('0');
@@ -76,9 +90,9 @@ So that I can see the calculations I make', () => {
             });
 
         it('when 8 is pressed on the calculator \
-        it should have 8 in upperscreen and 8 in lowerscreen', () => {
+        it should have 8 in upperscreen and 8 in lowerscreen. ', () => {
             
-            _componentOrchestratorService._screenService._currentWorkingValue.next('8');
+            _componentOrchestratorService._currentvalue.next('8');
             fixture.detectChanges();
             expect(lwrScrn.textContent).toBe('8');
             expect(uprScrn.textContent).toBe('8');
@@ -86,11 +100,11 @@ So that I can see the calculations I make', () => {
             
         });
         it('when 8, 6 and 2 are pressed on the calculator \
-        it should have 862 in upperscreen and 862 in lowerscreen', () => {
+        it should have 862 in upperscreen and 862 in lowerscreen. ', () => {
             
-            _componentOrchestratorService._screenService._currentWorkingValue.next('8');
-            _componentOrchestratorService._screenService._currentWorkingValue.next('6');
-            _componentOrchestratorService._screenService._currentWorkingValue.next('2');
+            _componentOrchestratorService._currentvalue.next('8');
+            _componentOrchestratorService._currentvalue.next('6');
+            _componentOrchestratorService._currentvalue.next('2');
             fixture.detectChanges();
             expect(lwrScrn.textContent).toBe('862');
             expect(uprScrn.textContent).toBe('862');
@@ -98,12 +112,12 @@ So that I can see the calculations I make', () => {
             
         });
         it('when 8, 6, 2 and * are pressed on the calculator \
-        it should have * in upperscreen and 862* in lowerscreen', () => {
+        it should have * in upperscreen and 862* in lowerscreen. ', () => {
             
-            _componentOrchestratorService._screenService._currentWorkingValue.next('8');
-            _componentOrchestratorService._screenService._currentWorkingValue.next('6');
-            _componentOrchestratorService._screenService._currentWorkingValue.next('2');
-            _componentOrchestratorService._screenService._currentWorkingValue.next('*');
+            _componentOrchestratorService._currentvalue.next('8');
+            _componentOrchestratorService._currentvalue.next('6');
+            _componentOrchestratorService._currentvalue.next('2');
+            _componentOrchestratorService._currentvalue.next('*');
             fixture.detectChanges();
             expect(lwrScrn.textContent).toBe('862*');
             expect(uprScrn.textContent).toBe('*');
