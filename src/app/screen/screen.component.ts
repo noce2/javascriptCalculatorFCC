@@ -7,18 +7,31 @@ import { OrchestratorService } from "../services/orchestrator.service";
   styleUrls: ['./screen.component.css'],
 })
 export class ScreenComponent  { 
-  private upperScreenValue: string = '0';
-  private lowerScreenValue: string = '';
+  private upperScreenValue: string;
+  private lowerScreenValue: string;
   private searchParam = /(?:\d*\.)?\d+(?:e[+-]\d+)?$|[*/+-]$/g;
+  private upperScreenDigitLimit = 13;
+  private lowerScreenDigitLimit = 21;
 
-  constructor (private orchestratorService: OrchestratorService) { 
-    this.orchestratorService._screenService._currentWorkingValue.subscribe( 
-      this.subscribeCallBacks
+  constructor (private _orchestratorService: OrchestratorService) { 
+    this._orchestratorService.subscribeToPressedButtonValues( 
+      this,this.subscribeCallBacks
     );
-  }
+    this.upperScreenValue = '0';
+    this.lowerScreenValue = '';
 
+  }
+  
   private setLowerScreen(input: string){
-    this.lowerScreenValue = this.lowerScreenValue.concat(input);
+    console.log(this.lowerScreenValue.length);
+    if (this.lowerScreenValue.length > this.lowerScreenDigitLimit){
+      this.resetLowerScreen();
+      this.lowerScreenValue = this.lowerScreenValue.
+                                concat('Digit Limit Exceeded - Press AC');
+    } else {
+      this.lowerScreenValue = this.lowerScreenValue.concat(input);
+    }
+    
   }
 
   private setUpperScreen(input: string){
@@ -27,9 +40,19 @@ export class ScreenComponent  {
 
   private setUpperScreenToLastDigitOrOperator(){
     let result = this.lowerScreenValue.match(this.searchParam);
+    // below is necessary because above is an Array of results.
+    let actualMatch: string
     if(result){
-      this.setUpperScreen(result[result.length-1]);
+      actualMatch = result[result.length-1];
+      if(actualMatch.length < this.upperScreenDigitLimit){
+            this.setUpperScreen(actualMatch);
+          } else {
+            this.setUpperScreen('Digit Limit');
+          }
     }
+    
+
+    
   }
 
   private resetLowerScreen(){
@@ -57,10 +80,10 @@ export class ScreenComponent  {
 
   }
 
-  private subscribeCallBacks = (input: string) => {
+  private subscribeCallBacks(input: string) {
         switch(input){
           case '=':
-            let result:string = this.orchestratorService.calculate(this.lowerScreenValue);
+            let result:string = this._orchestratorService.calculate(this.lowerScreenValue);
             this.resetLowerScreen();
             this.setLowerScreen(`${result}`);
             this.setUpperScreen(result);
